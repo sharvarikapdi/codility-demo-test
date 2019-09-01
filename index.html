@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+</head>
+
+<script>
+    'use strict';
+
+/* global $, jQuery */
+
+function solution() {
+    
+  let commentBoxList = $('.comment-list');
+  commentBoxList.forEach(element => {
+      const dataCount = element.attr('data-count');
+      const url = 'https://www.example.com/comments?count='+ dataCount;
+      fetch(url).then((resp)=>resp.json()).then(
+          (response)=>{
+              console.log(response);
+              for(let index=0;index<response.length;index++){
+                const divToAdd = `<div class="comment-item__username">${response[index].username}</div>
+                                <div class="comment-item__message">${response[index].message}</div>`;
+                element.append(divToAdd);
+              }
+
+          }).catch((error)=>console.log(error));
+  });
+};
+
+</script>
+</head>
+
+<body>
+    <div class="comment-list" data-count="3"></div>
+    <button onclick="solution" >Click</button>
+</body>
+</html>
